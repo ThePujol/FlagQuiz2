@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.text.Normalizer
 import java.util.*
@@ -25,14 +24,33 @@ class QuizActivity : AppCompatActivity() {
     private var playerName: String? = null
     private var currentIndex = 0
     private var score = 0
-    private var currentFive = mutableListOf<String>()
+    private var currentFive = mutableListOf<Int>() // Will store indices
+    private var currentFiveNames = mutableListOf<String>() // Will store country names
     private var summary = ArrayList<String>()
 
-    // Pool of country identifiers matching drawable resource names
-    private val flagPool = listOf(
-        "brasil", "japao", "alemanha", "franca", "italia", "espanha",
-        "argentina", "mexico", "canada", "australia", "china", "india",
-        "reino_unido", "coreia_sul", "russia"
+    // Pool of flag drawable resources and their corresponding country names
+    private val flags = listOf(
+        R.drawable.flag_brasil,
+        R.drawable.flag_japao,
+        R.drawable.flag_alemanha,
+        R.drawable.flag_franca,
+        R.drawable.flag_italia,
+        R.drawable.flag_espanha,
+        R.drawable.flag_argentina,
+        R.drawable.flag_mexico,
+        R.drawable.flag_canada,
+        R.drawable.flag_australia,
+        R.drawable.flag_china,
+        R.drawable.flag_india,
+        R.drawable.flag_reino_unido,
+        R.drawable.flag_coreia_sul,
+        R.drawable.flag_russia
+    )
+
+    private val countryNames = listOf(
+        "BRASIL", "JAPAO", "ALEMANHA", "FRANCA", "ITALIA", "ESPANHA",
+        "ARGENTINA", "MEXICO", "CANADA", "AUSTRALIA", "CHINA", "INDIA",
+        "REINO UNIDO", "COREIO DA SUL", "RUSSIA"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +84,9 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun initializeQuiz() {
-        currentFive = flagPool.shuffled().take(5).toMutableList()
+        val indices = flags.indices.shuffled().take(5)
+        currentFive = indices.toMutableList()
+        currentFiveNames = indices.map { countryNames[it] }.toMutableList()
         currentIndex = 0
         score = 0
         summary.clear()
@@ -98,16 +118,11 @@ class QuizActivity : AppCompatActivity() {
         val questionNumber = currentIndex + 1
         txtProgress.text = getString(R.string.progress_format, questionNumber)
 
-        val currentCountry = currentFive[currentIndex]
-        val resourceId = resources.getIdentifier("flag_$currentCountry", "drawable", packageName)
+        val currentFlagResource = flags[currentFive[currentIndex]]
+        val currentCountry = currentFiveNames[currentIndex]
 
-        if (resourceId != 0) {
-            imgFlag.setImageResource(resourceId)
-            imgFlag.contentDescription = getString(R.string.flag_content_description, getCapitalizedCountryName(currentCountry))
-        } else {
-            Toast.makeText(this, getString(R.string.flag_not_found, "flag_$currentCountry"), Toast.LENGTH_SHORT).show()
-            // Set a placeholder or keep previous image
-        }
+        imgFlag.setImageResource(currentFlagResource)
+        imgFlag.contentDescription = getString(R.string.flag_content_description, getCapitalizedCountryName(currentCountry))
 
         // Reset UI state for new question
         edtAnswer.text.clear()
@@ -119,7 +134,7 @@ class QuizActivity : AppCompatActivity() {
 
     private fun checkAnswer() {
         val userAnswer = edtAnswer.text.toString().trim()
-        val currentCountry = currentFive[currentIndex]
+        val currentCountry = currentFiveNames[currentIndex]
         val questionNumber = currentIndex + 1
 
         if (userAnswer.isBlank()) {
@@ -181,7 +196,8 @@ class QuizActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putInt("currentIndex", currentIndex)
         outState.putInt("score", score)
-        outState.putStringArrayList("currentFive", ArrayList(currentFive))
+        outState.putIntArray("currentFive", currentFive.toIntArray())
+        outState.putStringArrayList("currentFiveNames", ArrayList(currentFiveNames))
         outState.putStringArrayList("summary", summary)
         outState.putString("currentAnswer", edtAnswer.text.toString())
         outState.putString("currentFeedback", txtFeedback.text.toString())
@@ -193,7 +209,23 @@ class QuizActivity : AppCompatActivity() {
     private fun restoreState(savedInstanceState: Bundle) {
         currentIndex = savedInstanceState.getInt("currentIndex", 0)
         score = savedInstanceState.getInt("score", 0)
-        currentFive = savedInstanceState.getStringArrayList("currentFive")?.toMutableList() ?: mutableListOf()
+
+        // Restore currentFive (indices)
+        val savedIndices = savedInstanceState.getIntArray("currentFive")
+        currentFive = if (savedIndices != null) {
+            savedIndices.toList().toMutableList()
+        } else {
+            mutableListOf()
+        }
+
+        // Restore currentFiveNames (country names)
+        val savedNames = savedInstanceState.getStringArrayList("currentFiveNames")
+        currentFiveNames = if (savedNames != null) {
+            ArrayList(savedNames)
+        } else {
+            mutableListOf()
+        }
+
         summary = savedInstanceState.getStringArrayList("summary") ?: ArrayList()
 
         // Restore UI state after views are initialized
