@@ -50,7 +50,7 @@ class QuizActivity : AppCompatActivity() {
     private val countryNames = listOf(
         "BRASIL", "JAPAO", "ALEMANHA", "FRANCA", "ITALIA", "ESPANHA",
         "ARGENTINA", "MEXICO", "CANADA", "AUSTRALIA", "CHINA", "INDIA",
-        "REINO UNIDO", "COREIO DA SUL", "RUSSIA"
+        "REINO UNIDO", "COREIA DA SUL", "RUSSIA"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
