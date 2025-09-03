@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App Name -->
-    <string name="app_name">FlagQuiz</string>
+    <string name="app_name" translatable="false">FlagQuiz</string>
 
     <!-- Welcome Activity -->
-    <string name="welcome_subtitle">Test your knowledge of world flags!</string>
-    <string name="enter_your_name">Enter your name</string>
-    <string name="start_quiz">Start Quiz</string>
-    <string name="error_name_required">Please enter your name</string>
+    <string name="welcome_subtitle">Teste seu conhecimento em bandeiras!</string>
+    <string name="enter_your_name">Digite seu nome</string>
+    <string name="start_quiz">Iniciar Quiz</string>
+    <string name="error_name_required">Por favor digite seu nome</string>
 
     <!-- Quiz Activity -->
-    <string name="progress_format">%d of 5</string>
-    <string name="progress_placeholder">1 of 5</string>
-    <string name="enter_country_name">Enter country name</string>
-    <string name="answer">Answer</string>
-    <string name="next">Next</string>
-    <string name="correct_answer">Correct!</string>
-    <string name="incorrect_answer">Incorrect (right answer: %s)</string>
-    <string name="flag_content_description">Flag of %s</string>
-    <string name="flag_image_description">Country flag</string>
-    <string name="flag_not_found">Flag image not found: %s</string>
-    <string name="summary_correct">%d) %s — Correct (+20)</string>
-    <string name="summary_incorrect">%d) %s — Incorrect</string>
+    <string name="progress_format">%d de 5</string>
+    <string name="progress_placeholder">1 de 5</string>
+    <string name="enter_country_name">Digite o nome do país</string>
+    <string name="answer">Resposta</string>
+    <string name="next">Próximo</string>
+    <string name="correct_answer">Correto!</string>
+    <string name="incorrect_answer">Incorreto (respsta: %s)</string>
+    <string name="flag_content_description">Bandeira de %s</string>
+    <string name="flag_image_description">Bandeira nacional</string>
+    <string name="flag_not_found">Imagm não localizada: %s</string>
+    <string name="summary_correct">%d) %s — Correto (+20)</string>
+    <string name="summary_incorrect">%d) %s — Incorreto</string>
 
     <!-- Result Activity -->
-    <string name="congratulations_generic">Congratulations!</string>
-    <string name="congratulations_player">Congrats, %s!</string>
-    <string name="final_score">Score: %d/100</string>
-    <string name="score_placeholder">Score: 0/100</string>
-    <string name="quiz_summary">Quiz Summary:</string>
-    <string name="play_again">Play Again</string>
+    <string name="congratulations_generic">Parabéns!</string>
+    <string name="congratulations_player">Parabéns, %s!</string>
+    <string name="final_score">Placar: %d/100</string>
+    <string name="score_placeholder">Pontuação: 0/100</string>
+    <string name="quiz_summary">Resultados:</string>
+    <string name="play_again">Jogar novamente</string>
 </resources>
